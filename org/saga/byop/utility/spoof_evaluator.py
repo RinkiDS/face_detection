@@ -38,3 +38,24 @@ class spoof_evaluator:
             label_name="SPOOF"
 
         return label_name, confidence_percent
+
+    def predict_images_labels(self, image_path[]):
+
+        image_array = self.preprocess_image(image_path)
+
+        # Make predictions using your trained model
+        predictions = self.model.predict(image_array)
+
+        # Decode predictions
+        label_index = np.argmax(predictions)
+
+        # Depending on how you trained your model, you might have a label mapping to decode the index
+        # If you have a label mapping, you can use it to get the label name
+        label_name = "Your Label"  # Replace this with your actual label name
+        confidence = predictions[0][label_index]  # Get confidence score for the predicted label
+        confidence_percent = confidence * 100
+        label_name = "REAL"
+        if (confidence_percent < 50):
+            label_name = "SPOOF"
+
+        return label_name, confidence_percent
