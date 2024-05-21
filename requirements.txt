@@ -5,3 +5,5 @@ Pillow
 deepface
 keras
 matplotlib
+opencv-python
+pyyaml
