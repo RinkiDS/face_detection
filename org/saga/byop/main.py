@@ -5,7 +5,7 @@ from utility.spoof_evaluator import spoof_evaluator
 from utility import image_capturing
 from utility import log_setup
 from utility import Helper
-from utility import image_similarity_matcher
+from utility.image_similarity_matcher import image_similarity_matcher
 
 import logging
 class main:
