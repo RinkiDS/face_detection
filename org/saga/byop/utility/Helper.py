@@ -25,7 +25,9 @@ class Helper:
   def likelihood_estimator(data_array,value1,value2):
           # Count occurrences of each value
       value1_count = data_array.count(value1)
+      #print(value1_count)
       value2_count = data_array.count(value2)
+      #print(value2_count)
 
       # Compare counts
       if value1_count > value2_count:
@@ -33,4 +35,4 @@ class Helper:
       elif value1_count < value2_count:
           print(f"There are more {value2} values.")
       else:
-          print(f"There are an equal number of {value1} and {value2} values: {count_value1} each.")
+          print(f"There are an equal number of {value1} and {value2}")
