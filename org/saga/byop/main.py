@@ -1,8 +1,8 @@
 import tensorflow as tf
 from keras.models import load_model
-from org.saga.byop.utility import spoof_evaluator
-from org.saga.byop.utility import image_capturing
-from org.saga.byop.utility import log_setup
+from utility import spoof_evaluator
+from utility import image_capturing
+from utility import log_setup
 import logging
 class main:
     # Set up logging
