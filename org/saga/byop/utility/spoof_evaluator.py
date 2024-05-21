@@ -2,7 +2,7 @@ import numpy as np
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications.mobilenet import preprocess_input
 
-class SpoofEvaluator:
+class spoof_evaluator:
 
     def __init__(self, model,target_size=(180,180)):
         self.model=model;
@@ -13,6 +13,7 @@ class SpoofEvaluator:
         img_array = img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
         img_array = img_array / 255.0  # Normalize the image
+        return img_array
 
     # this is  a function to predict the image label
     def predict_image_label(self,image_path):

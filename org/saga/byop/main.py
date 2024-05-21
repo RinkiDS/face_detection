@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 
-from utility import spoof_evaluator
+from utility.spoof_evaluator import spoof_evaluator
 from utility import image_capturing
 from utility import log_setup
 from utility import Helper
@@ -45,8 +45,6 @@ class main:
        image_similarity_matcher(image_to_verify,reference_image)
 
 
-m=main()
-m.run()
 
 
 
