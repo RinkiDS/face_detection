@@ -1,0 +1,4 @@
+paths:
+  model_path : ""
+  candidate_repository: "/content/drive/MyDrive/data"
+  reference_image_repository: "/content/drive/MyDrive/data"

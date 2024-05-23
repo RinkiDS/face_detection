@@ -4,14 +4,14 @@ import os
 CONFIG = None
 
 # Function to load configuration settings from the YAML file
-def load_config(file_path):
+def load_config():
     global CONFIG
+    file_path = os.path.join(os.path.dirname(__file__), 'config.yaml')
     with open(file_path, 'r') as file:
         CONFIG = yaml.safe_load(file)
+    return CONFIG
 
-# Load configuration settings at the start of your application
-cwd=os.getcwd()
-load_config(os.path.join(cwd,'config.yaml'))
+config = load_config()
 
 # Access configuration settings throughout your application
 def get_model_path():

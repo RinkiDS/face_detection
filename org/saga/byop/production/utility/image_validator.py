@@ -8,9 +8,9 @@ import logging
 
 class image_validator:
 
-    def image_similarity_check(image_paths):
+    def image_similarity_check(image_paths,reference_image):
         results = []
-        reference_image = '/content/drive/MyDrive/data/A2.jpg'
+
         for image_to_verify in image_paths:
             helper.plot_comparing_images(image_to_verify, reference_image)
             result = image_similarity_matcher.image_similarity_match(image_to_verify, reference_image)
