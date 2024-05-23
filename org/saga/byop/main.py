@@ -1,6 +1,7 @@
 from utility.image_validator import  image_validator
 from utility.helper import  helper
 import logging
+import config_manager
 
 class main:
     # Set up logging
@@ -10,7 +11,7 @@ class main:
         self.logger = logging.getLogger(__name__)
 
     def run(self):
-        directory_path = "/content/drive/MyDrive/data"
+        directory_path = config_manager.CONFIG['paths']['directory_path']
           # reading the captured images
         image_paths = helper.load_images_from_dir(directory_path)
         print(image_paths)
