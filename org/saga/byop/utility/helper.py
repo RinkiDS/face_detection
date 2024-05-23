@@ -1,8 +1,9 @@
 import os
 import cv2
 import matplotlib.pyplot as plt
+from collections import Counter
 
-class Helper:
+class helper:
 
   def load_images_from_dir(directory):
     path = []
@@ -23,16 +24,9 @@ class Helper:
       plt.show()
 
   def likelihood_estimator(data_array,value1,value2):
-          # Count occurrences of each value
-      value1_count = data_array.count(value1)
-      #print(value1_count)
-      value2_count = data_array.count(value2)
-      #print(value2_count)
-
+      # Count occurrences of each value
+      counter = Counter(data_array)
       # Compare counts
-      if value1_count > value2_count:
-          print("There are more {value1} values.")
-      elif value1_count < value2_count:
-          print(f"There are more {value2} values.")
-      else:
-          print(f"There are an equal number of {value1} and {value2}")
+      #Find the value with the maximum count
+      most_common_value, count = counter.most_common(1)[0]
+      print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")
