@@ -23,10 +23,11 @@ class helper:
       plt.axis('off')  # Hide axis
       plt.show()
 
-  def likelihood_estimator(data_array,value1,value2):
+  def likelihood_estimator(data_array):
       # Count occurrences of each value
       counter = Counter(data_array)
       # Compare counts
       #Find the value with the maximum count
       most_common_value, count = counter.most_common(1)[0]
-      print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")
+      #print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")
+      return  most_common_value,count
