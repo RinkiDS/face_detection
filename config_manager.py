@@ -17,8 +17,15 @@ config = load_config()
 def get_model_path():
     return CONFIG['paths']['model_path']
 
-def get_directory_path():
-    return CONFIG['paths']['directory_path']
+def get_candidate_repository_path():
+     path=CONFIG['paths']['reference_image_repository']
+     print(path)
+     return path
+
+def get_voting_repository_path():
+    path= CONFIG['paths']['voting_repository']
+    print(path)
+    return path
 
 # Example usage
 if __name__ == "__main__":

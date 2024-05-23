@@ -4,6 +4,7 @@ from .spoof_evaluator import spoof_evaluator
 from .helper import helper
 from .image_similarity_matcher import image_similarity_matcher
 import logging
+import config_manager
 
 
 class image_validator:
@@ -22,7 +23,7 @@ class image_validator:
     def image_spoof_check(image_paths):
         # 1-load the model
         print("Loading Model");
-        model_path = '/content/drive/MyDrive/model/finalized_model-21may2024.h5'
+        model_path = config_manager.get_model_path()
         model = load_model(model_path)
         print("***************Model loaded successfully**********");
         #  2-sending the model to evaluate the image

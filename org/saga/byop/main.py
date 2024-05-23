@@ -13,15 +13,15 @@ class main:
         self.logger = logging.getLogger(__name__)
 
     def run(self,candidate_name):
-        candidate_repository_path = config_manager.CONFIG['paths']['candidate_repository']
-        candidate_directory_path=os.path.join(candidate_repository_path,candidate_name)
+        voting_repository_path = config_manager.get_voting_repository_path()
+        candidate_directory_path=os.path.join(voting_repository_path,candidate_name)
         print(candidate_directory_path)
 
         # 1- getting 10 images from frames and saving in candidate_repository
         # image_capturing.image_capturing.start_capturing_images_from_vcam(candidate_directory_path,10)
 
         # reading the captured images of the candidate
-        image_paths = helper.load_images_from_dir(candidate_directory_path)
+        image_paths = helper.helper.load_images_from_dir(candidate_directory_path)
         print(image_paths)
 
 
@@ -35,7 +35,7 @@ class main:
 
 
         # 3-DO SIMILARITY CHECK
-        reference_image_repository_path = config_manager.CONFIG['paths']['reference_image_repository']
+        reference_image_repository_path = config_manager.get_candidate_repository_path()
         reference_image_path=os.path.join(reference_image_repository_path,candidate_name + ".jpg")
         print(reference_image_path)
         most_common_value,count=image_validator.image_similarity_check(candidate_directory_path,reference_image_path)

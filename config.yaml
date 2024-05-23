@@ -1,4 +1,4 @@
 paths:
-  model_path : ""
-  candidate_repository: "/content/drive/MyDrive/data"
-  reference_image_repository: "/content/drive/MyDrive/data"
+  model_path : "C:\\inputFolder\\model\\finalized_model-21may2024.h5"
+  voting_repository: "C:\\inputFolder\\vot_repo"
+  reference_image_repository: "C:\\inputFolder\\can_repo"
