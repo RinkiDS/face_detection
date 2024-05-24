@@ -13,6 +13,7 @@ class blink_detection:
         # Initialize counters for blink detection
         self.COUNTER = 0
         self.TOTAL = 0
+        self.result = []
 
     def blink_detector(self,gray,face,frame):
         landmarks = self.predictor(gray, face)
@@ -27,12 +28,16 @@ class blink_detection:
         # Average the eye aspect ratio
         ear = (left_ear + right_ear) / 2.0
 
+
+
         # Check if the eye aspect ratio is below the threshold
         if ear < EYE_AR_THRESH:
+            self.result.append("NOBLINK")
             print(">>>>>>>>>>>>>>>>>>>>>>>>>NO BLINK DETECTED>>>>>>>>>>>")
             self.COUNTER += 1
         else:
             if self.COUNTER >= EYE_AR_CONSEC_FRAMES:
+                self.result.append("BLINK")
                 print(">>>>>>>>>>>>>>>> BLINK DETECTED>>>>>>>>>>>")
                 self.TOTAL += 1
             self.COUNTER = 0
@@ -40,6 +45,8 @@ class blink_detection:
         # Draw eyes on the frame
         cv2.drawContours(frame, [cv2.convexHull(np.array(left_eye))], -1, (0, 255, 0), 1)
         cv2.drawContours(frame, [cv2.convexHull(np.array(right_eye))], -1, (0, 255, 0), 1)
+
+        print("ARRY OF RESULT" ,self.results)
 
 
 # Function to compute eye aspect ratio (EAR)
