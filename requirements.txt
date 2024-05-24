@@ -10,4 +10,6 @@ mlxtend
 imutils
 cmake
 dlib
-config
+
+
+https://sourceforge.net/projects/dclib/files/latest/download
