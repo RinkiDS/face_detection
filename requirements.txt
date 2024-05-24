@@ -1,4 +1,4 @@
-tensorflow==2.16.1
+tensorflow==2.13.1
 numpy
 opencv-python
 Pillow
@@ -6,3 +6,8 @@ deepface
 matplotlib
 pyyaml
 tf-keras
+mlxtend
+imutils
+cmake
+dlib
+config
