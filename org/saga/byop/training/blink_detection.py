@@ -32,12 +32,12 @@ class blink_detection:
 
         # Check if the eye aspect ratio is below the threshold
         if ear < EYE_AR_THRESH:
-            self.result.append("NOBLINK")
+            self.result.append("False")
             print(">>>>>>>>>>>>>>>>>>>>>>>>>NO BLINK DETECTED>>>>>>>>>>>")
             self.COUNTER += 1
         else:
             if self.COUNTER >= EYE_AR_CONSEC_FRAMES:
-                self.result.append("BLINK")
+                self.result.append("True")
                 print(">>>>>>>>>>>>>>>> BLINK DETECTED>>>>>>>>>>>")
                 self.TOTAL += 1
             self.COUNTER = 0
