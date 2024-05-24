@@ -2,3 +2,4 @@ paths:
   model_path : "C:\\inputFolder\\model\\finalized_model-21may2024.h5"
   voting_repository: "C:\\inputFolder\\vot_repo"
   reference_image_repository: "C:\\inputFolder\\can_repo"
+  face_detection_model_path: ""

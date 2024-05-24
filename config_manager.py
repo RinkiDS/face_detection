@@ -27,6 +27,11 @@ def get_voting_repository_path():
     print(path)
     return path
 
+def get_face_detection_model_path():
+    path= CONFIG['paths']['face_detection_model_path']
+    print(path)
+    return path
+
 # Example usage
 if __name__ == "__main__":
 
