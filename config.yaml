@@ -2,4 +2,8 @@ paths:
   model_path : "C:\\inputFolder\\model\\finalized_model-21may2024.h5"
   voting_repository: "C:\\inputFolder\\vot_repo"
   reference_image_repository: "C:\\inputFolder\\can_repo"
-  face_detection_model_path: ""
+  face_detector_model_path: "D:\\San\\IIM\\SEM3\\GROUP-BYOP\\source\\esagav2\\eSAGA\\shape_predictor_68_face_landmarks.dat"
+
+parameters:
+  frame_count: 5
+  wait_time: 1000

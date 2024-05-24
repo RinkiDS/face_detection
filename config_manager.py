@@ -32,6 +32,16 @@ def get_face_detection_model_path():
     print(path)
     return path
 
+def get_wait_time():
+    path= CONFIG['parameters']['wait_time']
+    print(path)
+    return path
+
+def get_frame_count():
+    path= CONFIG['parameters']['frame_count']
+    print(path)
+    return path
+
 # Example usage
 if __name__ == "__main__":
 

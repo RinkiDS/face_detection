@@ -21,8 +21,8 @@ class main:
         # 1- getting 10 images from frames and saving in candidate_repository
         #image_capturing.start_capturing_images_from_vcam(candidate_directory_path,10)
 
-        fd = face_detection()
-        fd.face_detector()
+        fd = face_detection
+        fd.face_detector(config_manager.get_wait_time(),config_manager.get_frame_count())
 
         # reading the captured images of the candidate
         image_paths = helper.helper.load_images_from_dir(candidate_directory_path)
