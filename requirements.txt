@@ -8,8 +8,6 @@ pyyaml
 tf-keras
 mlxtend
 imutils
-cmake
-dlib
+mtcnn
 
-
-https://sourceforge.net/projects/dclib/files/latest/download
+#dlib-19.22.99-cp38-cp38-win_amd64.whl
