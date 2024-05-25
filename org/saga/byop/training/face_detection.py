@@ -28,13 +28,18 @@ class  face_detection:
                 frame = imutils.resize(frame, width=640)
                 if(blink_detection_status):
                     result=b.blink_detector(frame)
+                    if(result):
+                        print("*************BLINK DETECTED*****************")
+                    else:
+                        print("***********************NO BLINK DETECTED*************")
                 if (landmark_detection_status):
                     face.face_landmark_detector(frame)
                     blink_results.append(result)
                 cv2.imshow("Video", frame)
 
                 print("Frame Count",frame_count)
-                if cv2.waitKey(1000) & 0xFF == ord('q'):
+                #time.sleep(.50)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
 
         except FaceNotFoundException as e:

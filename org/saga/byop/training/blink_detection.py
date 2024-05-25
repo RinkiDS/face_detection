@@ -18,9 +18,12 @@ from org.saga.byop.exception.FaceNotFoundException import FaceNotFoundException
 class blink_detection:
 	def __init__(self, model_path):
 		# Variables
+		#This constant value will act as a threshold value to detect the blink.
 		self.blink_thresh = 0.45
 		self.succ_frame =2
+		#This constant value is the threshold value for the number of consecutive frames.
 		self.count_frame = 0
+		# This value will denote the total number of consecutive frames that will have the threshold value less than the EYE ASPECT RATIO constant.
 		self.blink_count=0
 
 		# Eye landmarks
@@ -69,8 +72,6 @@ class blink_detection:
 				self.count_frame = 0
 				cv2.putText(frame, 'Blink Detected', (30, 30),
 							cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 1)
-
-
 				return True  # Return True if blink detected
 			elif avg < self.blink_thresh:
 				self.count_frame += 1  # Incrementing the frame count
