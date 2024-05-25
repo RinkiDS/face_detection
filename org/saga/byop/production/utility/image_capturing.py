@@ -41,3 +41,14 @@ class image_capturing:
         finally:
             video_capture.release()
             cv2.destroyAllWindows()
+
+    def capture_images(num_images=5):
+        # Initialize camera
+        camera = cv2.VideoCapture(0)
+        images = []
+        for _ in range(num_images):
+            ret, img = camera.read()
+            if ret:
+                images.append(img)
+        camera.release()
+        return images

@@ -2,7 +2,7 @@ paths:
   model_path : "C:\\inputFolder\\model\\finalized_model-21may2024.h5"
   voting_repository: "C:\\inputFolder\\vot_repo"
   reference_image_repository: "C:\\inputFolder\\can_repo"
-  face_detector_model_path: "D:\\San\\IIM\\SEM3\\GROUP-BYOP\\source\\esagav2\\eSAGA\\shape_predictor_68_face_landmarks.dat"
+  face_detection_model_path: "C:\\Users\\rinki\\Downloads\\facial-landmarks-recognition-master\\facial-landmarks-recognition-master\\shape_predictor_68_face_landmarks.dat"
 
 parameters:
   frame_count: 5

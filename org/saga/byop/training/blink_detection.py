@@ -1,64 +1,97 @@
-import cv2
-import dlib
-from scipy.spatial import distance as dist
+# Importing the required dependencies 
+import cv2 # for video rendering 
+import dlib # for face and landmark detection 
+import imutils 
+# for calculating dist b/w the eye landmarks 
+from scipy.spatial import distance as dist 
+# to get the landmark ids of the left and right eyes 
+# you can do this manually too 
+from imutils import face_utils
+import config_manager
 import numpy as np
+from org.saga.byop.exception.FaceNotFoundException import FaceNotFoundException
+
+
+# from imutils import
 
 
 class blink_detection:
+	def __init__(self, model_path):
+		# Variables
+		self.blink_thresh = 0.45
+		self.succ_frame =2
+		self.count_frame = 0
+		self.blink_count=0
 
-    def __init__(self,face_detection_model_path):
-        # Load face detector and predictor from dlib
-        self.detector = dlib.get_frontal_face_detector()
-        self.predictor = dlib.shape_predictor(face_detection_model_path)
-        # Initialize counters for blink detection
-        self.COUNTER = 0
-        self.TOTAL = 0
-        self.result = []
+		# Eye landmarks
+		(self.L_start, self.L_end) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
+		(self.R_start, self.R_end) = face_utils.FACIAL_LANDMARKS_IDXS['right_eye']
 
-    def blink_detector(self,gray,face,frame):
-        landmarks = self.predictor(gray, face)
-        points = [(landmarks.part(n).x, landmarks.part(n).y) for n in range(36, 48)]
-        left_eye = points[0:6]
-        right_eye = points[6:12]
+		# Initializing the Models for Landmark and
+		# face Detection
+		self.detector = dlib.get_frontal_face_detector()
+		self.landmark_predict = dlib.shape_predictor(model_path)
 
-        # Compute eye aspect ratio for both eyes
-        left_ear = eye_aspect_ratio(left_eye)
-        right_ear = eye_aspect_ratio(right_eye)
+	def blink_detector(self,frame):
 
-        # Average the eye aspect ratio
-        ear = (left_ear + right_ear) / 2.0
+		result=False
+		global shape, count_frame
+		# converting frame to gray scale to
+		# pass to detector
+		img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		# detecting the faces
+		faces = self.detector(img_gray)
 
+		if len(faces) == 0:
+			raise FaceNotFoundException("No face found in the frame")
 
+		for face in faces:
 
-        # Check if the eye aspect ratio is below the threshold
-        if ear < EYE_AR_THRESH:
-            self.result.append("False")
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>NO BLINK DETECTED>>>>>>>>>>>")
-            self.COUNTER += 1
-        else:
-            if self.COUNTER >= EYE_AR_CONSEC_FRAMES:
-                self.result.append("True")
-                print(">>>>>>>>>>>>>>>> BLINK DETECTED>>>>>>>>>>>")
-                self.TOTAL += 1
-            self.COUNTER = 0
+			# landmark detection
+			shape = self.landmark_predict(img_gray, face)
 
-        # Draw eyes on the frame
-        cv2.drawContours(frame, [cv2.convexHull(np.array(left_eye))], -1, (0, 255, 0), 1)
-        cv2.drawContours(frame, [cv2.convexHull(np.array(right_eye))], -1, (0, 255, 0), 1)
+			# converting the shape class directly
+			# to a list of (x,y) coordinates
+			shape = face_utils.shape_to_np(shape)
 
-        print("ARRY OF RESULT" ,self.results)
+			# parsing the landmarks list to extract
+			# lefteye and righteye landmarks--#
+			lefteye = shape[self.L_start: self.L_end]
+			righteye = shape[self.R_start:self.R_end]
 
-
-# Function to compute eye aspect ratio (EAR)
-def eye_aspect_ratio(eye):
-    A = dist.euclidean(eye[1], eye[5])
-    B = dist.euclidean(eye[2], eye[4])
-    C = dist.euclidean(eye[0], eye[3])
-    ear = (A + B) / (2.0 * C)
-    return ear
+			# Calculate the EAR
+			left_EAR = calculate_EAR(lefteye)
+			right_EAR = calculate_EAR(righteye)
+			print(self.count_frame)
+			# Avg of left and right eye EAR
+			avg = (left_EAR + right_EAR) / 2
+			if avg < self.blink_thresh and self.count_frame >= self.succ_frame:
+				self.count_frame = 0
+				cv2.putText(frame, 'Blink Detected', (30, 30),
+							cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 1)
 
 
-# Constants for eye blink detection
-EYE_AR_THRESH = 0.25
-EYE_AR_CONSEC_FRAMES = 3
+				return True  # Return True if blink detected
+			elif avg < self.blink_thresh:
+				self.count_frame += 1  # Incrementing the frame count
+
+
+			cv2.drawContours(frame, [cv2.convexHull(np.array(lefteye))], -1, (0, 255, 0), 1)
+			cv2.drawContours(frame, [cv2.convexHull(np.array(righteye))], -1, (0, 255, 0), 1)
+		return result
+
+
+# defining a function to calculate the EAR
+def calculate_EAR(eye):
+
+	# calculate the vertical distances
+	y1 = dist.euclidean(eye[1], eye[5])
+	y2 = dist.euclidean(eye[2], eye[4])
+
+	# calculate the horizontal distance
+	x1 = dist.euclidean(eye[0], eye[3])
+
+	# calculate the EAR
+	EAR = (y1+y2) / x1
+	return EAR
 

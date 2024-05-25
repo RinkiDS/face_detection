@@ -1,47 +1,55 @@
 import dlib
 import cv2
+import imutils
 import matplotlib.pyplot as plt
 from  blink_detection import  blink_detection
+from  face_landmarks_detection import  face_landmarks_detection
 import config_manager
-from org.saga.byop.training.face_landmarks_detection import face_landmarks_detection
-
+import time
+from org.saga.byop.exception.FaceNotFoundException import FaceNotFoundException
+from org.saga.byop.production.utility.helper import helper
 
 class  face_detection:
 
-    def face_detector(self,wait_time=1000,frame_count=5,blink_detection_status=True,landmark_detection_status=True):
-        # Open webcam
-        cap = cv2.VideoCapture(0)
-        detector = dlib.get_frontal_face_detector()
-        ret, frame = cap.read()
+    def face_detector(self,f_count=20,blink_detection_status=True,landmark_detection_status=False):
+        if (blink_detection_status):
+         b = blink_detection(config_manager.get_face_detection_model_path())
+        if (landmark_detection_status):
+            face = face_landmarks_detection(config_manager.get_face_detection_model_path())
+        blink_results=[]
+        cam = cv2.VideoCapture(0)
+        frame_count=0
+        try:
+            while(1):
 
-        while frame>=frame_count:
-            if not ret:
-                break
+                _, frame = cam.read()
+                frame_count =frame_count+1
 
-            # Convert frame to grayscale
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                frame = imutils.resize(frame, width=640)
+                if(blink_detection_status):
+                    result=b.blink_detector(frame)
+                if (landmark_detection_status):
+                    face.face_landmark_detector(frame)
+                    blink_results.append(result)
+                cv2.imshow("Video", frame)
 
-            # Detect faces in the grayscale frame
-            faces = detector(gray)
-            if (blink_detection_status):
-                blink = blink_detection(config_manager.get_face_detection_model_path());
-            if (landmark_detection_status):
-                landmark = face_landmarks_detection(config_manager.get_face_detection_model_path());
+                print("Frame Count",frame_count)
+                if cv2.waitKey(1000) & 0xFF == ord('q'):
+                    break
 
-            for face in faces:
-                if (blink_detection_status):
-                    blink.blink_detector(gray, face, frame)
-                if(landmark_detection_status):
-                    landmark.face_landmark_detector(gray,face,frame)
+        except FaceNotFoundException as e:
+            print(e)
+        except ValueError as ve:
+            print(ve)
 
-            # Display the frame
-            cv2.imshow("Frame", frame)
-            key = cv2.waitKey(wait_time) & 0xFF
-
-            # Break the loop if 'q' key is pressed
-            if key == ord("q"):
-                break
+        finally:
+            cam.release()
+            cv2.destroyAllWindows()
+        return blink_results
 
 
-fd=face_detection()
-fd.face_detector()
+f=face_detection()
+results=f.face_detector()
+
+#most_common_value, count = helper.likelihood_estimator(results)
+#print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")
