@@ -3,7 +3,12 @@ paths:
   voting_repository: "C:\\inputFolder\\vot_repo"
   reference_image_repository: "C:\\inputFolder\\can_repo"
   face_detection_model_path: "C:\\Users\\rinki\\Downloads\\facial-landmarks-recognition-master\\facial-landmarks-recognition-master\\shape_predictor_68_face_landmarks.dat"
-
+  training_model_path:
+  checkpoint_filepath:
+  train_dataset_path:
+  test_dataset_path:
 parameters:
   frame_count: 5
   wait_time: 1000
+
+
