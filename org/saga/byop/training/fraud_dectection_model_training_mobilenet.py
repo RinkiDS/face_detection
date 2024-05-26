@@ -4,6 +4,7 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
+import config_manager
 
 
 class PrintCallback(keras.callbacks.Callback):
@@ -155,16 +156,16 @@ class fraud_dectection_model_training_mobilenet:
 
 # Example usage
 if __name__ == "__main__":
-    folder_path = "C:\\Users\\Rinki\\Downloads\\archive\\LCC_FASD\\LCC_FASD_training"
-    checkpoint_filepath = "/tmp/ckpt/checkpoint.model.keras"
+    folder_path = config_manager.get_train_dataset_path()
+    checkpoint_filepath = config_manager.get_checkpoint_filepath()
     epochs = 10
-    model_save_path = "/tmp/saved_model/my_model"
+    model_save_path = config_manager.get_training_model_path()
 
     classifier = fraud_dectection_model_training_mobilenet(folder_path)
     classifier.run_training(folder_path, checkpoint_filepath, epochs)
     classifier.save_model(model_save_path)
-    classifier.evaluate("C:\\Users\\Rinki\\Downloads\\archive\\LCC_FASD\\LCC_FASD_testing")
+    classifier.evaluate(config_manager.get_test_dataset_path())
 
     # Load the model and evaluate again to confirm it was saved and loaded correctly
     classifier.load_model(model_save_path)
-    classifier.evaluate("C:\\Users\\Rinki\\Downloads\\archive\\LCC_FASD\\LCC_FASD_testing")
+    classifier.evaluate(config_manager.get_test_dataset_path())
