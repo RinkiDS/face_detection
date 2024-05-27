@@ -14,15 +14,18 @@ class main:
         self.logger = logging.getLogger(__name__)
 
     def run(self,candidate_name):
+
         voting_repository_path = config_manager.get_voting_repository_path()
-        candidate_directory_path=os.path.join(voting_repository_path,candidate_name)
+        candidate_directory_path = os.path.join(voting_repository_path, candidate_name)
         print(candidate_directory_path)
+
 
         # 1- getting 10 images from frames and saving in candidate_repository
         #image_capturing.start_capturing_images_from_vcam(candidate_directory_path,10)
 
         fd = face_detection
-        fd.face_detector(config_manager.get_wait_time(),config_manager.get_frame_count())
+        blink_results=fd.face_detector(candidate_directory_path,config_manager.get_wait_time(),config_manager.get_frame_count())
+
 
         # reading the captured images of the candidate
         image_paths = helper.helper.load_images_from_dir(candidate_directory_path)
@@ -43,7 +46,7 @@ class main:
         reference_image_path=os.path.join(reference_image_repository_path,candidate_name + ".jpg")
         print(reference_image_path)
         most_common_value,count=image_validator.image_similarity_check(image_paths,reference_image_path)
-        print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")
+        #print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")
 
         bool1 = True
         bool2 = False

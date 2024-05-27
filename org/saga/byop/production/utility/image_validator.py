@@ -17,7 +17,7 @@ class image_validator:
             result = image_similarity_matcher.image_similarity_match(image_to_verify, reference_image)
             print("Result of Similarity is ", result)
             results.append(result)
-        most_common_value, count = helper.likelihood_estimator(results)
+        most_common_value, count = helper.likelihood_estimator_max_count_and_percentage(results)
         return most_common_value, count
 
     def image_spoof_check(image_paths):
@@ -32,5 +32,5 @@ class image_validator:
         # image_path = '/content/drive/MyDrive/data/spoof_980.png'
         # 3-predict image for real or spoof
         label_names = evaluator.predict_images_labels(image_paths)
-        most_common_value, count = helper.likelihood_estimator(label_names)
+        most_common_value, count = helper.likelihood_estimator_max_count_and_percentage(label_names)
         return most_common_value, count

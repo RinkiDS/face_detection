@@ -45,8 +45,8 @@ class blink_detection:
 		# detecting the faces
 		faces = self.detector(img_gray)
 
-		if len(faces) == 0:
-			raise FaceNotFoundException("No face found in the frame")
+		#if len(faces) == 0:
+			#raise FaceNotFoundException("No face found in the frame")
 
 		for face in faces:
 

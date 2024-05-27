@@ -1,5 +1,6 @@
 import dlib
 import cv2
+import os
 import imutils
 import matplotlib.pyplot as plt
 from  blink_detection import  blink_detection
@@ -11,7 +12,7 @@ from org.saga.byop.production.utility.helper import helper
 
 class  face_detection:
 
-    def face_detector(self,f_count=20,blink_detection_status=True,landmark_detection_status=False):
+    def face_detector(self,candidate_directory_path,f_count=20,blink_detection_status=True,landmark_detection_status=False):
         if (blink_detection_status):
          b = blink_detection(config_manager.get_face_detection_model_path())
         if (landmark_detection_status):
@@ -35,6 +36,10 @@ class  face_detection:
                 if (landmark_detection_status):
                     face.face_landmark_detector(frame)
                     blink_results.append(result)
+                filename = f'{frame_count}.jpg'
+                frame_name = os.path.join(candidate_directory_path, filename)
+                # frame_name = f'{save_path}/frame_{frame_count}.jpg'
+                cv2.imwrite(frame_name, frame)
                 cv2.imshow("Video", frame)
 
                 print("Frame Count",frame_count)
@@ -53,8 +58,8 @@ class  face_detection:
         return blink_results
 
 
-f=face_detection()
-results=f.face_detector()
+#f=face_detection()
+#results=f.face_detector()
 
 #most_common_value, count = helper.likelihood_estimator(results)
 #print(f"The value that occurs the most is: {most_common_value} with {count} occurrences.")

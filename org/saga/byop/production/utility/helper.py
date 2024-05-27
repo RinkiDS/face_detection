@@ -53,3 +53,4 @@ class helper:
       else:
           max_value = max_values[0]
           print(f"Maximum count value: {max_value}, Count: {max_count}, Percentage: {max_percentage}%")
+      return max_value,max_count,max_percentage
