@@ -1,4 +1,10 @@
 import cv2
+import sys
+from io import StringIO
+
+# Function to redirect stdout to a variable
+def redirect_stdout_to_variable():
+    sys.stdout = StringIO()  # Redirect stdout to a StringIO object
 
 # Function to display video frames and logs
 def display_video_and_logs(video_path):
@@ -12,7 +18,8 @@ def display_video_and_logs(video_path):
             break
 
         # Generate logs (example)
-        logs = "Frame processing complete..."
+        logs = sys.stdout.getvalue()  # Get logs from redirected stdout
+        sys.stdout.truncate(0)  # Clear the StringIO object
 
         # Concatenate video frame and logs vertically
         log_frame = cv2.putText(frame.copy(), logs, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
@@ -29,4 +36,5 @@ def display_video_and_logs(video_path):
 
 # Example usage
 video_path = "path_to_your_video.mp4"
+redirect_stdout_to_variable()  # Redirect stdout to a variable
 display_video_and_logs(video_path)
